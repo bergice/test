@@ -17,11 +17,19 @@ class Ball {
         this.resetPosition();
     }
 
+    #generateStartAngleRad() {
+        let angleDeg = -45 + Math.floor(Math.random() * 90);
+        if (Math.random() < 0.5) {
+            angleDeg += 180;
+        }
+        return angleDeg * (Math.PI/180);
+    }
+
     resetPosition() {
         this.x = this.startX;
         this.y = this.startY;
         this.speed = startSpeed;
-        let angle = Math.random() * Math.PI * 2;
+        let angle = this.#generateStartAngleRad();
         this.velocityX = Math.cos(angle) * this.speed;
         this.velocityY = Math.sin(angle) * this.speed;
     }

@@ -94,6 +94,29 @@
 			}
 		});
 
+		function drawText(time) {
+			// draw scores
+			app.context.font = "60px Trebuchet MS";
+			app.context.textAlign = 'right';
+			app.context.fillText(player1.getScore(), app.width / 2 - margin - borderWidth, margin + 60, app.width / 2);
+			app.context.textAlign = 'left';
+			app.context.fillText(player2.getScore(), app.width /2 + margin + borderWidth, margin + 60, app.width / 2);
+
+			// draw blinking pause message
+			if (app.paused && Math.cos(app.timestamp / 100) > 0.1) {
+				app.context.font = "60px Trebuchet MS";
+				app.context.textAlign = 'center';
+				app.context.fillText("GAME PAUSED", app.width / 2, app.height / 2 + 11, app.width);
+			}
+
+			// draw controls
+			app.context.font = "12px Trebuchet MS";
+			app.context.textAlign = 'left';
+			app.context.fillText("Use W / S to control your paddle", margin, app.height - margin, app.width);
+			app.context.textAlign = 'right';
+			app.context.fillText("Use up / down arrow keys to control your paddle", app.width - margin, app.height - margin, app.width);
+		}
+
 		app.onUpdate = function(time){
 			if (!app.initialised) {
 				return;
@@ -107,11 +130,7 @@
 			}
 
 			// draw
-			app.context.font = "60px Trebuchet MS";
-			app.context.textAlign = 'right';
-			app.context.fillText(player1.getScore(), app.width / 2 - margin - borderWidth, margin + 60, app.width / 2);
-			app.context.textAlign = 'left';
-			app.context.fillText(player2.getScore(), app.width /2 + margin + borderWidth, margin + 60, app.width / 2);
+			drawText(time);
 		};
 	</script>
 </body>

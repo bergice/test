@@ -1,4 +1,4 @@
-const moveSpeed = 4;
+const moveSpeed = 8;
 const padWidth = 20;
 const padHeight = 100;
 

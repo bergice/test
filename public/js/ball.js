@@ -1,6 +1,6 @@
-const startSpeed = 4;
-const speedIncrement = .2;
-const ballSize = 10;
+const startSpeed = 8;
+const speedIncrement = .1;
+const ballSize = 20;
 
 /**
  * The ball that bounces back and forth

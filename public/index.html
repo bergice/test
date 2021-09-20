@@ -98,10 +98,11 @@
 			}
 
 			// draw
-			app.context.textAlign = 'left';
-			app.context.fillText(`Score: ${player1.getScore()}`, margin, margin * 2, app.width / 2);
+			app.context.font = "60px Trebuchet MS";
 			app.context.textAlign = 'right';
-			app.context.fillText(`Score: ${player2.getScore()}`, app.width - margin, margin * 2, app.width / 2);
+			app.context.fillText(player1.getScore(), app.width / 2 - margin - borderWidth, margin + 60, app.width / 2);
+			app.context.textAlign = 'left';
+			app.context.fillText(player2.getScore(), app.width /2 + margin + borderWidth, margin + 60, app.width / 2);
 		};
 	</script>
 </body>

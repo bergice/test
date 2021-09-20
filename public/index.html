@@ -47,6 +47,15 @@
 				width  : borderWidth,
 				height : app.height,
 				color  : 'white',
+				draw: function(context) {
+					context.beginPath();
+					context.lineWidth = borderWidth;
+					context.strokeStyle = this.color;
+					context.setLineDash([borderWidth]);
+					context.moveTo(this.x + (borderWidth / 2), this.y + (borderWidth / 2));
+					context.lineTo(this.x + (borderWidth / 2), this.y + this.height - (borderWidth / 2));
+					context.stroke();
+				}
 			});
 			this.nodes.push({
 				id : 'top',

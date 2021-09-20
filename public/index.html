@@ -11,6 +11,13 @@
 	<script type="text/javascript" src="js/pad.js"></script>
 	<script type="text/javascript" src="js/ball.js"></script>
 	<script type="text/javascript">
+		const borderWidth = 20;
+		const margin = 10;
+
+		let player1;
+		let player2;
+		let ball;
+
 		app.restartMatch = function() {
 			ball.resetPosition();
 			player1.resetPosition();
@@ -35,18 +42,18 @@
 			// add nodes
 			this.nodes.push({
 				id : 'midline',
-				x  : app.width / 2 - 10,
+				x  : app.width / 2 - (borderWidth) / 2,
 				y  : 0,
-				width  : 20,
+				width  : borderWidth,
 				height : app.height,
 				color  : 'black',
 			});
 			this.nodes.push({
 				id : 'top',
 				x  : 0,
-				y  : -20,
+				y  : -borderWidth,
 				width  : app.width,
-				height : 20,
+				height : borderWidth,
 				color  : 'black',
 			});
 			this.nodes.push({
@@ -54,13 +61,13 @@
 				x  : 0,
 				y  : app.height,
 				width  : app.width,
-				height : 20,
+				height : borderWidth,
 				color  : 'black',
 			});
 
-			player1 = new Pad('player1', 10, app.height / 2 - 50, 'w', 's');
-			player2 = new Pad('player2', app.width - 30, app.height / 2 - 50, 'ArrowUp', 'ArrowDown');
-			ball = new Ball('ball', app.width / 2 - 5, app.height / 2 - 5);
+			player1 = new Pad('player1', margin, app.height / 2 - (padHeight / 2), 'w', 's');
+			player2 = new Pad('player2', app.width - margin - padWidth, app.height / 2 - (padHeight / 2), 'ArrowUp', 'ArrowDown');
+			ball = new Ball('ball', app.width / 2 - (ballSize / 2), app.height / 2 - (ballSize / 2));
 
 			this.nodes.push(player1);
 			this.nodes.push(player2);
@@ -92,9 +99,9 @@
 
 			// draw
 			app.context.textAlign = 'left';
-			app.context.fillText(`Score: ${player1.getScore()}`, 10, 20, app.width / 2);
+			app.context.fillText(`Score: ${player1.getScore()}`, margin, margin * 2, app.width / 2);
 			app.context.textAlign = 'right';
-			app.context.fillText(`Score: ${player2.getScore()}`, app.width - 10, 20, app.width / 2);
+			app.context.fillText(`Score: ${player2.getScore()}`, app.width - margin, margin * 2, app.width / 2);
 		};
 	</script>
 </body>

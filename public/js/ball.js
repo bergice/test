@@ -1,4 +1,4 @@
-const startSpeed = 8;
+const startSpeed = 7;
 const speedIncrement = .1;
 const ballSize = 20;
 
@@ -48,27 +48,15 @@ class Ball {
             && this.bottom > paddle.top;
     }
 
-    #checkForPaddleBounces() {
-        let paddle = (this.x < app.width / 2) ? app.getNode('player1') : app.getNode('player2');
-
+    #checkForPaddleBounces(paddle) {
         if (this.#collisionDetect(paddle, ball)) {
-            let angle = 0;
+            // bounce towards the opponent
+            this.velocityX = Math.abs(this.velocityX + speedIncrement) * (this.x < paddle.x ? -1 : 1);
 
-            // if ball hit the top of paddle
-            if (this.y < (paddle.y + paddle.height / 2)) {
-                angle = -1 * Math.PI / 4;
-            }
-            // if it hit the bottom of paddle
-            else if (this.y > (paddle.y + paddle.height / 2)) {
-                angle = Math.PI / 4;
-            }
-
-            // change velocity of ball according to which paddle the ball hits
-            this.velocityX = (paddle === app.getNode('player1') ? 1 : -1) * this.speed * Math.cos(angle);
-            this.velocityY = this.speed * Math.sin(angle);
-
-            // increase ball speed
-            this.speed += speedIncrement;
+            // ball curving (changes the y velocity by moving the paddle while hitting it)
+            const damping = 6;
+            this.velocityY -= paddle.up * moveSpeed / damping;
+            this.velocityY += paddle.down * moveSpeed / damping;
         }
     }
 
@@ -92,7 +80,8 @@ class Ball {
 
     update(time) {
         this.#move();
-        this.#checkForPaddleBounces();
+        this.#checkForPaddleBounces(app.getNode('player1'));
+        this.#checkForPaddleBounces(app.getNode('player2'));
         this.#checkForWallBounces();
     }
 

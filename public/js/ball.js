@@ -17,7 +17,7 @@ class Ball {
         this.resetPosition();
     }
 
-    #generateStartAngleRad() {
+    static #generateStartAngleRad() {
         let angleDeg = -45 + Math.floor(Math.random() * 90);
         if (Math.random() < 0.5) {
             angleDeg += 180;
@@ -29,7 +29,7 @@ class Ball {
         this.x = this.startX;
         this.y = this.startY;
         this.speed = startSpeed;
-        let angle = this.#generateStartAngleRad();
+        let angle = Ball.#generateStartAngleRad();
         this.velocityX = Math.cos(angle) * this.speed;
         this.velocityY = Math.sin(angle) * this.speed;
     }
@@ -39,7 +39,7 @@ class Ball {
         this.y += this.velocityY;
     }
 
-    #collisionDetect(paddle) {
+    #isColliding(paddle) {
         paddle.top = paddle.y;
         paddle.right = paddle.x + paddle.width;
         paddle.bottom = paddle.y + paddle.height;
@@ -57,7 +57,7 @@ class Ball {
     }
 
     #checkForPaddleBounces(paddle) {
-        if (this.#collisionDetect(paddle, ball)) {
+        if (this.#isColliding(paddle, ball)) {
             // bounce towards the opponent
             this.velocityX = Math.abs(this.velocityX + speedIncrement) * (this.x < paddle.x ? -1 : 1);
 

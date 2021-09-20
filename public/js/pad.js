@@ -49,6 +49,9 @@ class Pad {
         }
     }
 
+    /**
+     * Applies movement to the paddle
+     */
     #move() {
         if (this.up) {
             this.y -= moveSpeed;
@@ -58,6 +61,9 @@ class Pad {
         }
     }
 
+    /**
+     * Ensures the paddle does not leave the game area
+     */
     #clamp() {
         let min = 0;
         let max = app.height - this.height;

@@ -38,8 +38,8 @@ class Ball {
         paddle.left = paddle.x;
 
         this.top = this.y;
-        this.right = this.x + this.radius;
-        this.bottom = this.y + this.radius;
+        this.right = this.x + this.width;
+        this.bottom = this.y + this.height;
         this.left = this.x;
 
         return this.left < paddle.right

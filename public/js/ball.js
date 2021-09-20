@@ -1,6 +1,6 @@
-const startSpeed = 4;
-const speedIncrement = .2;
-const ballSize = 10;
+const startSpeed = 7;
+const speedIncrement = .1;
+const ballSize = 20;
 
 /**
  * The ball that bounces back and forth
@@ -13,15 +13,23 @@ class Ball {
         this.width = ballSize;
         this.height = ballSize;
         this.radius = ballSize / 2;
-        this.color = 'black';
+        this.color = 'white';
         this.resetPosition();
+    }
+
+    static #generateStartAngleRad() {
+        let angleDeg = -45 + Math.floor(Math.random() * 90);
+        if (Math.random() < 0.5) {
+            angleDeg += 180;
+        }
+        return angleDeg * (Math.PI/180);
     }
 
     resetPosition() {
         this.x = this.startX;
         this.y = this.startY;
         this.speed = startSpeed;
-        let angle = Math.random() * Math.PI * 2;
+        let angle = Ball.#generateStartAngleRad();
         this.velocityX = Math.cos(angle) * this.speed;
         this.velocityY = Math.sin(angle) * this.speed;
     }
@@ -31,7 +39,7 @@ class Ball {
         this.y += this.velocityY;
     }
 
-    #collisionDetect(paddle) {
+    #isColliding(paddle) {
         paddle.top = paddle.y;
         paddle.right = paddle.x + paddle.width;
         paddle.bottom = paddle.y + paddle.height;
@@ -48,27 +56,15 @@ class Ball {
             && this.bottom > paddle.top;
     }
 
-    #checkForPaddleBounces() {
-        let paddle = (this.x < app.width / 2) ? app.getNode('player1') : app.getNode('player2');
+    #checkForPaddleBounces(paddle) {
+        if (this.#isColliding(paddle, ball)) {
+            // bounce towards the opponent
+            this.velocityX = Math.abs(this.velocityX + speedIncrement) * (this.x < paddle.x ? -1 : 1);
 
-        if (this.#collisionDetect(paddle, ball)) {
-            let angle = 0;
-
-            // if ball hit the top of paddle
-            if (this.y < (paddle.y + paddle.height / 2)) {
-                angle = -1 * Math.PI / 4;
-            }
-            // if it hit the bottom of paddle
-            else if (this.y > (paddle.y + paddle.height / 2)) {
-                angle = Math.PI / 4;
-            }
-
-            // change velocity of ball according to which paddle the ball hits
-            this.velocityX = (paddle === app.getNode('player1') ? 1 : -1) * this.speed * Math.cos(angle);
-            this.velocityY = this.speed * Math.sin(angle);
-
-            // increase ball speed
-            this.speed += speedIncrement;
+            // ball curving (changes the y velocity by moving the paddle while hitting it)
+            const damping = 6;
+            this.velocityY -= paddle.up * moveSpeed / damping;
+            this.velocityY += paddle.down * moveSpeed / damping;
         }
     }
 
@@ -92,7 +88,8 @@ class Ball {
 
     update(time) {
         this.#move();
-        this.#checkForPaddleBounces();
+        this.#checkForPaddleBounces(app.getNode('player1'));
+        this.#checkForPaddleBounces(app.getNode('player2'));
         this.#checkForWallBounces();
     }
 

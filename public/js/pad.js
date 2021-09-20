@@ -1,4 +1,4 @@
-const moveSpeed = 4;
+const moveSpeed = 8;
 const padWidth = 20;
 const padHeight = 100;
 
@@ -12,7 +12,7 @@ class Pad {
         this.startY = y;
         this.width = padWidth;
         this.height = padHeight;
-        this.color = 'black';
+        this.color = 'white';
         this.upKey = upKey;
         this.downKey = downKey;
         this.score = 0;
@@ -49,6 +49,9 @@ class Pad {
         }
     }
 
+    /**
+     * Applies movement to the paddle
+     */
     #move() {
         if (this.up) {
             this.y -= moveSpeed;
@@ -58,6 +61,9 @@ class Pad {
         }
     }
 
+    /**
+     * Ensures the paddle does not leave the game area
+     */
     #clamp() {
         let min = 0;
         let max = app.height - this.height;

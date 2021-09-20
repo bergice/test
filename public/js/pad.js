@@ -12,7 +12,7 @@ class Pad {
         this.startY = y;
         this.width = padWidth;
         this.height = padHeight;
-        this.color = 'black';
+        this.color = 'white';
         this.upKey = upKey;
         this.downKey = downKey;
         this.score = 0;

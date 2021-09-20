@@ -13,7 +13,7 @@ class Ball {
         this.width = ballSize;
         this.height = ballSize;
         this.radius = ballSize / 2;
-        this.color = 'black';
+        this.color = 'white';
         this.resetPosition();
     }
 
